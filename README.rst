@@ -10,6 +10,10 @@ From this repository:
 
 *cd cubemx2cmake*
 
+*pip install .*
+
+Or you can install it from PyPI:
+
 *pip install cubemx2cmake*
 
 Usage

@@ -1,0 +1,3 @@
+include README.rst
+include cubemx2cmake/CMakeLists.txt.template
+include cubemx2cmake/STM32Toolchain.cmake.template

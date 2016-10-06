@@ -1,4 +1,4 @@
-from pkg_resources import resource_string
+from pkg_resources import resource_filename
 import sys
 from configparser import ConfigParser
 from string import Template
@@ -52,11 +52,12 @@ def main():
 	}
 	
 	try:
-		with open("CMakeLists.txt", "w") as cmakelists:
-			cmakelists.write(Template(resource_string(__name__, "CMakeLists.txt.template").decode("utf-8")).safe_substitute(cmakelists_params))
-
-		with open("STM32Toolchain.cmake", "w") as toolchain:
-			toolchain.write(Template(resource_string(__name__, "STM32Toolchain.cmake.template").decode("utf-8")).safe_substitute(toolchain_params))
+		with open(resource_filename(__name__, "CMakeLists.txt.template"), "r") as cmakelists_template:
+			with open("CMakeLists.txt", "w") as cmakelists:
+				cmakelists.write(Template(cmakelists_template.read()).safe_substitute(cmakelists_params))
+		with open(resource_filename(__name__, "STM32Toolchain.cmake.template"), "r") as toolchain_template:
+			with open("STM32Toolchain.cmake", "w") as toolchain:
+				toolchain.write(Template(toolchain_template.read()).safe_substitute(toolchain_params))
 	except Exception:
 		print("Cannot write output files! Maybe write access to the current directory is denied.")
 		exit(0)

@@ -16,7 +16,7 @@ setup(
 	keywords='st stm32 cube cubemx stm32cubemx cmake code generator',
 	url='https://github.com/eugene-babichenko/cubemx2cmake',
 	author='Yevhenii Babichenko',
-	email='eugene.babichenko@gmail.com',
+	author_email='eugene.babichenko@gmail.com',
 	license='MIT',
 	packages=['cubemx2cmake'],
 	zip_safe=False,

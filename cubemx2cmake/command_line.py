@@ -25,7 +25,7 @@ def main():
 	
 	cube_config = ConfigParser()
 	try:
-		cube_config.read_string("[section]\n"+open(cube_file).read())
+		cube_config.read_string(u"[section]\n"+open(cube_file).read())
 	except Exception:
 		print("Input file doesn't exist, is broken or access denied.")
 		exit(0)

@@ -33,6 +33,7 @@ def main():
     
     try:
         mcu_name = cube_config["mcu.name"]
+        mcu_username = cube_config["mcu.username"]
         mcu_family = cube_config["mcu.family"]+"xx"
         prj_name = cube_config["projectmanager.projectname"]
     except Exception:
@@ -42,12 +43,12 @@ def main():
     cmakelists_params = {
         "PRJ_NAME": prj_name,
         "MCU_FAMILY": mcu_family,
-        "MCU_LINE": mcu_name[:9]+"x"+mcu_name[13],
-        "MCU_LINKER_SCRIPT": mcu_name+"_FLASH.ld"
+        "MCU_LINE": mcu_username[:9]+"x"+mcu_name[13],
+        "MCU_LINKER_SCRIPT": mcu_username+"_FLASH.ld"
     }
     
     toolchain_params = {
-        "MCU_LINKER_SCRIPT": mcu_name+"_FLASH.ld",
+        "MCU_LINKER_SCRIPT": mcu_username+"_FLASH.ld",
         "MCU_ARCH": architecture[mcu_family]
     }
     

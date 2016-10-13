@@ -24,4 +24,4 @@ Generate your initialization code from STM32CubeMX with the following Code Gener
 * Toolchain: SW4STM32
 * [X] Generate under root
 
-Then open your project directory and run *cubemx2cmake <your_cube_mx_file>.ioc*. If your working dirctory contains inly one CubeMX project file (*.ioc), you can simply run *cubemx2cmake* and it will find your project file automatically. This will generate CMakeLists.txt and STM32Toolchain.cmake files. To get all the things done right use *-DCMAKE_TOOLCHAIN_FILE=STM32Toolchain.cmake* command line option with CMake.
+Then open your project directory and run *cubemx2cmake <your_cube_mx_file>.ioc*. If your working directory contains only one CubeMX project file (*.ioc), you can simply run *cubemx2cmake* and it will find your project file automatically. This will generate CMakeLists.txt and STM32Toolchain.cmake files. To get all the things done right use *-DCMAKE_TOOLCHAIN_FILE=STM32Toolchain.cmake* command line option with CMake.

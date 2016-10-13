@@ -25,6 +25,7 @@ def main():
             if file.endswith(".txt"):
                 ioc_files.push(file)
         if len(ioc_file) == 1:
+            print(ioc_files[0]+" was found!")
             cube_file = ioc_files[0]
         else:
             print("No input file was specified!")

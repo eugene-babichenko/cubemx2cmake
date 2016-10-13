@@ -23,7 +23,7 @@ def main():
         ioc_files = []
         for file in os.listdir("."):
             if file.endswith(".txt"):
-                ioc_files.push(file)
+                ioc_files.append(file)
         if len(ioc_file) == 1:
             print(ioc_files[0]+" was found!")
             cube_file = ioc_files[0]

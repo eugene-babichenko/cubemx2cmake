@@ -21,7 +21,7 @@ def main():
         cube_file = sys.argv[1]
     except Exception:
         ioc_files = []
-        for file in os.listdir("/mydir"):
+        for file in os.listdir("."):
             if file.endswith(".txt"):
                 ioc_files.push(file)
         if len(ioc_file) == 1:

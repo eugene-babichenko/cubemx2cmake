@@ -1,5 +1,6 @@
 from pkg_resources import resource_filename
-import sys, os
+import sys
+import os
 from configparser import ConfigParser
 from string import Template
 
@@ -16,7 +17,7 @@ def main():
         "STM32F4xx": "-mcpu=cortex-m4 -mfpu=hard -mfloat-abi=fpv4-sp-d16",
         "STM32F7xx": "-mcpu=cortex-m7 -mfpu=hard -mfloat-abi=fpv5-sp-d16"
     }
-    
+
     try:
         cube_file = sys.argv[1]
     except Exception:
@@ -30,7 +31,7 @@ def main():
         else:
             print("No input file was specified!")
             exit(0)
-    
+
     cube_config = ConfigParser()
     try:
         cube_config.read_string(u"[section]\n"+open(cube_file).read())
@@ -38,7 +39,7 @@ def main():
         print("Input file doesn't exist, is broken or access denied.")
         exit(0)
     cube_config = dict(cube_config["section"])
-    
+
     try:
         mcu_name = cube_config["mcu.name"]
         mcu_username = cube_config["mcu.username"]
@@ -54,12 +55,12 @@ def main():
         "MCU_LINE": mcu_username[:9]+"x"+mcu_name[13],
         "MCU_LINKER_SCRIPT": mcu_username+"_FLASH.ld"
     }
-    
+
     toolchain_params = {
         "MCU_LINKER_SCRIPT": mcu_username+"_FLASH.ld",
         "MCU_ARCH": architecture[mcu_family]
     }
-    
+
     try:
         with open(resource_filename(__name__, "CMakeLists.txt.template"), "r") as cmakelists_template:
             with open("CMakeLists.txt", "w") as cmakelists:

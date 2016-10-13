@@ -22,7 +22,7 @@ def main():
     except Exception:
         ioc_files = []
         for file in os.listdir("."):
-            if file.endswith(".txt"):
+            if file.endswith(".ioc"):
                 ioc_files.append(file)
         if len(ioc_files) == 1:
             print(ioc_files[0]+" was found!")

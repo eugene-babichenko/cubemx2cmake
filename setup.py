@@ -1,9 +1,12 @@
+""" Package meta """
+
 from setuptools import setup
 
 
 def readme():
-    with open('README.rst') as f:
-        return f.read()
+    """ Load the contents of README.rst """
+    with open('README.rst') as readme_file:
+        return readme_file.read()
 
 setup(
     name='cubemx2cmake',

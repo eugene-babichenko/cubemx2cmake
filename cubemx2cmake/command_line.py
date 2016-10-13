@@ -1,5 +1,5 @@
 from pkg_resources import resource_filename
-import sys
+import sys, os
 from configparser import ConfigParser
 from string import Template
 
@@ -20,8 +20,15 @@ def main():
     try:
         cube_file = sys.argv[1]
     except Exception:
-        print("No input file was specified!")
-        exit(0)
+        ioc_files = []
+        for file in os.listdir("/mydir"):
+            if file.endswith(".txt"):
+                ioc_files.push(file)
+        if len(ioc_file) == 1:
+            cube_file = ioc_files[0]
+        else:
+            print("No input file was specified!")
+            exit(0)
     
     cube_config = ConfigParser()
     try:

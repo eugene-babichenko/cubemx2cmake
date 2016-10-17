@@ -20,10 +20,10 @@ architecture = {
     "STM32L1xx": "-mcpu=cortex-m3",
     "STM32F1xx": "-mcpu=cortex-m3",
     "STM32F2xx": "-mcpu=cortex-m3",
-    "STM32L4xx": "-mcpu=cortex-m4 -mfpu=hard -mfloat-abi=fpv4-sp-d16",
-    "STM32F3xx": "-mcpu=cortex-m4 -mfpu=hard -mfloat-abi=fpv4-sp-d16",
-    "STM32F4xx": "-mcpu=cortex-m4 -mfpu=hard -mfloat-abi=fpv4-sp-d16",
-    "STM32F7xx": "-mcpu=cortex-m7 -mfpu=hard -mfloat-abi=fpv5-sp-d16"
+    "STM32L4xx": "-mcpu=cortex-m4 -mfloat-abi=hard -mfpu=fpv4-sp-d16",
+    "STM32F3xx": "-mcpu=cortex-m4 -mfloat-abi=hard -mfpu=fpv4-sp-d16",
+    "STM32F4xx": "-mcpu=cortex-m4 -mfloat-abi=hard -mfpu=fpv4-sp-d16",
+    "STM32F7xx": "-mcpu=cortex-m7 -mfloat-abi=hard -mfpu=fpv5-sp-d16"
 }
 
 try:
@@ -76,7 +76,7 @@ toolchain_params = {
     "MCU_ARCH": architecture[mcu_family]
 }
 
-# Load templates from resourser
+# Load templates from resourses
 cmakelists_template_fn = resource_filename(__name__, "CMakeLists.txt.template")
 toolchain_template_fn = resource_filename(__name__, "STM32Toolchain.cmake.template")
 with open(cmakelists_template_fn, "r") as cmakelists_template:

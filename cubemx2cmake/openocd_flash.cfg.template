@@ -1,0 +1,8 @@
+source [find interface/stlink-v2.cfg]
+source [find target/${TARGET}.cfg]
+init
+reset init
+halt
+flash write_image erase build/${PRJ_NAME}.bin 0x08000000
+verify_image build/${PRJ_NAME}.bin 0x08000000
+shutdown

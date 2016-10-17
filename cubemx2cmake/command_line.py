@@ -56,42 +56,41 @@ except IOError:
 cube_config = dict(cube_config_parser["section"])
 
 try:
-    mcu_name = cube_config["mcu.name"]
+    mcu_family = cube_config["mcu.family"]
     mcu_username = cube_config["mcu.username"]
-    mcu_family = cube_config["mcu.family"]+"xx"
     prj_name = cube_config["projectmanager.projectname"]
 except KeyError:
     print("Input file is broken!")
     exit(0)
 
-cmakelists_params = {
-    "PRJ_NAME": prj_name,
-    "MCU_FAMILY": mcu_family,
-    "MCU_LINE": mcu_username[:9]+"x"+mcu_name[13],
-    "MCU_LINKER_SCRIPT": mcu_username+"_FLASH.ld"
+params = {
+    "CMakeLists.txt": {
+        "PRJ_NAME": prj_name,
+        "MCU_FAMILY": mcu_family+"xx"
+        "MCU_LINE": mcu_username[:9]+"x"+cube_config["mcu.name"][13],
+        "MCU_LINKER_SCRIPT": mcu_username+"_FLASH.ld"
+    },
+    "STM32Toolchain.cmake": {
+        "MCU_LINKER_SCRIPT": mcu_username+"_FLASH.ld",
+        "MCU_ARCH": architecture[mcu_family]
+    },
+    "openocd_debug.cfg": {
+        "TARGET": mcu_family+"x",
+        "PRJ_NAME": prj_name
+    },
+    "openocd_flash.cfg": {
+        "TARGET": mcu_family+"x",
+        "PRJ_NAME": prj_name
+    }
 }
 
-toolchain_params = {
-    "MCU_LINKER_SCRIPT": mcu_username+"_FLASH.ld",
-    "MCU_ARCH": architecture[mcu_family]
-}
-
-# Load templates from resourses
-cmakelists_template_fn = resource_filename(__name__, "CMakeLists.txt.template")
-toolchain_template_fn = resource_filename(__name__, "STM32Toolchain.cmake.template")
-with open(cmakelists_template_fn, "r") as cmakelists_template:
-    cmakelists_template = Template(cmakelists_template.read())
-with open(toolchain_template_fn, "r") as toolchain_template:
-    toolchain_template = Template(toolchain_template.read())
-
-# We use safe_substitute because CMake has the same variables format, as the template library
-try:
-    with open("CMakeLists.txt", "w") as cmakelists:
-        cmakelists.write(cmakelists_template.safe_substitute(cmakelists_params))
-    with open("STM32Toolchain.cmake", "w") as toolchain:
-        toolchain.write(toolchain_template.safe_substitute(toolchain_params))
-except IOError:
-    print("Cannot write output files! Maybe write access to the current directory is denied.")
-    exit(0)
-
-print("CMakeLists.txt and STM32Toolchain.cmake were successfully generated!")
+for template_name in templates:
+    template_fn = resource_filename(__name__, template_name+".template")
+    with open(template_fn, "r") as template_file:
+        template = Template(template_file.read())
+    try:
+        with open(template_name, "w") as target_file:
+            target_file.write(template.safe_substitute(params[template_name]))
+    except IOError:
+        print("Cannot write output files! Maybe write access to the current directory is denied.")
+        exit(0)

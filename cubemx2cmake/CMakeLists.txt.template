@@ -40,3 +40,10 @@ add_custom_command(TARGET ${PROJECT_NAME}.elf POST_BUILD
         COMMAND ${CMAKE_OBJCOPY} -Obinary $<TARGET_FILE:${PROJECT_NAME}.elf> ${BIN_FILE}
         COMMENT "Building ${HEX_FILE} 
 Building ${BIN_FILE}")
+
+add_custom_target(flash
+		WORKING_DIRECTORY ${PROJECT_SOURCE_DIR}
+		COMMAND openocd -f openocd_flash.cfg
+		COMMENT "Flashing the target processor..."
+		DEPENDS ${PROJECT_NAME}.elf
+		)

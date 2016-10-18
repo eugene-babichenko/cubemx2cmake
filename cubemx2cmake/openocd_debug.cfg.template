@@ -1,2 +1,2 @@
-source [find interface/stlink-v2.cfg]
+source [find interface/${INTERFACE_NAME}.cfg]
 source [find target/${TARGET}.cfg]

@@ -2,6 +2,7 @@
 
 import sys
 import os
+from argparse import ArgumentParser
 from configparser import ConfigParser
 from string import Template
 from pkg_resources import resource_filename
@@ -26,9 +27,18 @@ architecture = {
     "STM32F7xx": "-mcpu=cortex-m7 -mfloat-abi=hard -mfpu=fpv5-sp-d16"
 }
 
-try:
-    cube_file = sys.argv[1]
-except IndexError:
+arg_parser = ArgumentParser()
+arg_parser.add_argument("cube_file", default="", nargs='?',
+    help="CubeMX project file (if not specified, the one contained in current directory is used)")
+arg_parser.add_argument("-i", "--interface", default="stlink-v2",
+    help="OpenOCD debug interface name (stlink-v2 is used by default)")
+arg_parser.add_argument("-m", "--memory_start", default="0x08000000",
+    help="Flash memory start address (0x08000000 by default)")
+args = arg_parser.parse_args()
+
+if args.cube_file != "":
+    cube_file = args.cube_file
+else:
     ioc_files = []
     # Check if there is a single *.ioc file
     for file in os.listdir("."):
@@ -76,11 +86,14 @@ params = {
     },
     "openocd_debug.cfg": {
         "TARGET": mcu_family+"x",
-        "PRJ_NAME": prj_name
+        "PRJ_NAME": prj_name,
+        "INTERFACE_NAME": args.interface
     },
     "openocd_flash.cfg": {
         "TARGET": mcu_family+"x",
-        "PRJ_NAME": prj_name
+        "PRJ_NAME": prj_name,
+        "INTERFACE_NAME": args.interface,
+        "FLASH_START": args.memory_start
     }
 }
 

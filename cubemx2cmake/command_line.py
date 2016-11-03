@@ -7,9 +7,6 @@ from configparser import ConfigParser
 from string import Template
 from pkg_resources import resource_filename
 
-# Disable warnings about wrong constant name (pylint counts global variables as constants)
-# pylint: disable=C0103
-
 
 def main():
     """ Function entry point for running script from command line """

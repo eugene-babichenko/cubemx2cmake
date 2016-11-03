@@ -83,7 +83,7 @@ def _main(args):
     params = {
         "CMakeLists.txt": {
             "PRJ_NAME": prj_name,
-                "MCU_FAMILY": mcu_family+"xx",
+            "MCU_FAMILY": mcu_family+"xx",
             "MCU_LINE": mcu_username[:9]+"x"+cube_config["mcu.name"][13],
             "MCU_LINKER_SCRIPT": mcu_username+"_FLASH.ld"
         },
@@ -118,3 +118,5 @@ def _main(args):
             exit(0)
 
     print("All files were successfully generated!")
+
+    return params

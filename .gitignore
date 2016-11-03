@@ -1,3 +1,5 @@
 cubemx2cmake.egg-info/
 dist/
 build/
+test/__pycache__
+cubemx2cmake/__pycache__

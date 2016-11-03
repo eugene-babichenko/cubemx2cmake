@@ -11,11 +11,11 @@ from pkg_resources import resource_filename
 def main():
     """ Function entry point for running script from command line """
     _main(sys.argv[1:])
-    pass
+
 
 def _main(args):
     """ Runnable code with CLI args for testing convenience"""
-    ARCHITECURE = {
+    architecture = {
         "STM32L0xx": "-mcpu=cortex-m0",
         "STM32F0xx": "-mcpu=cortex-m0",
         "STM32L1xx": "-mcpu=cortex-m3",
@@ -68,7 +68,7 @@ def _main(args):
 
     # Get the data from the fake section we created earlier
     cube_config = dict(cube_config_parser["section"])
-    
+
     try:
         mcu_family = cube_config["mcu.family"]
         mcu_username = cube_config["mcu.username"]
@@ -86,7 +86,7 @@ def _main(args):
         },
         "STM32Toolchain.cmake": {
             "MCU_LINKER_SCRIPT": mcu_username+"_FLASH.ld",
-            "MCU_ARCH": ARCHITECURE[mcu_family+"xx"]
+            "MCU_ARCH": architecture[mcu_family+"xx"]
         },
         "openocd_debug.cfg": {
             "TARGET": mcu_family+"x",
@@ -103,7 +103,7 @@ def _main(args):
         }
     }
 
-    for template_name in params.keys():
+    for template_name in params:
         template_fn = resource_filename(__name__, template_name+".template")
         with open(template_fn, "r") as template_file:
             template = Template(template_file.read())

@@ -34,6 +34,10 @@ arg_parser.add_argument("-i", "--interface", default="stlink-v2",
     help="OpenOCD debug interface name (stlink-v2 is used by default)")
 arg_parser.add_argument("-m", "--memory_start", default="0x08000000",
     help="Flash memory start address (0x08000000 by default)")
+arg_parser.add_argument("-g", "--gdb_port", default="3333",
+    help="The port for connecting with GDB")
+arg_parser.add_argument("-t", "--telnet_port", default="4444",
+    help="The port for connecting via telnet")
 args = arg_parser.parse_args()
 
 if args.cube_file != "":
@@ -87,7 +91,9 @@ params = {
     "openocd_debug.cfg": {
         "TARGET": mcu_family+"x",
         "PRJ_NAME": prj_name,
-        "INTERFACE_NAME": args.interface
+        "INTERFACE_NAME": args.interface,
+        "GDB_PORT": args.gdb_port,
+        "TELNET_PORT": args.telnet_port
     },
     "openocd_flash.cfg": {
         "TARGET": mcu_family+"x",
@@ -107,3 +113,6 @@ for template_name in params.keys():
     except IOError:
         print("Cannot write output files! Maybe write access to the current directory is denied.")
         exit(0)
+
+print("All files were successfully generated!")
+# TODO: Remove SW4STM32 files

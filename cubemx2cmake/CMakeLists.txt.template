@@ -47,3 +47,4 @@ add_custom_target(flash
         COMMAND openocd -f openocd_flash.cfg
         COMMENT "Flashing the target processor..."
         DEPENDS ${PROJECT_NAME}.elf)
+add_custom_command(TARGET flash POST_BUILD COMMENT "Flashing finished!")

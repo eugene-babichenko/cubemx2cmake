@@ -3,3 +3,5 @@ dist/
 build/
 test/__pycache__
 cubemx2cmake/__pycache__
+cubemx2cmake/__init__.pyc
+cubemx2cmake/command_line.pyc

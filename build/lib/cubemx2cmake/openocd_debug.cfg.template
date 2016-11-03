@@ -1,0 +1,4 @@
+telnet_port ${TELNET_PORT}
+gdb_port ${GDB_PORT}
+source [find interface/${INTERFACE_NAME}.cfg]
+source [find target/${TARGET}.cfg]

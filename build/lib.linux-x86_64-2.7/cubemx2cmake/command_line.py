@@ -115,3 +115,4 @@ for template_name in params.keys():
         exit(0)
 
 print("All files were successfully generated!")
+# TODO: Remove SW4STM32 files

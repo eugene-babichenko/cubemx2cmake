@@ -1,5 +1,5 @@
 include README.rst
-include cubemx2cmake/CMakeLists.txt.template
-include cubemx2cmake/STM32Toolchain.cmake.template
-include cubemx2cmake/openocd_debug.cfg.template
-include cubemx2cmake/openocd_flash.cfg.template
+include cubemx2cmake/templates/CMakeLists.txt.template
+include cubemx2cmake/templates/STM32Toolchain.cmake.template
+include cubemx2cmake/templates/openocd_debug.cfg.template
+include cubemx2cmake/templates/openocd_flash.cfg.template

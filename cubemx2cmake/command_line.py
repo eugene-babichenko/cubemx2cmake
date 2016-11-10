@@ -104,7 +104,7 @@ def _main(args):
     }
 
     for template_name in params:
-        template_fn = resource_filename(__name__, template_name+".template")
+        template_fn = resource_filename(__name__, "templates/%s.template" % (template_name))
         with open(template_fn, "r") as template_file:
             template = Template(template_file.read())
         try:

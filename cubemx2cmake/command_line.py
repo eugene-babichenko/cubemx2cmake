@@ -100,7 +100,7 @@ def _main(args):
             "PRJ_NAME": prj_name,
             "INTERFACE_NAME": args.interface,
             "FLASH_START": args.memory_start
-        }
+        },
         "openocd_debug.sh": {},
         "openocd_flash.sh": {},
         "gdb.sh": {

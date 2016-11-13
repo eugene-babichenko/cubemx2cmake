@@ -101,6 +101,12 @@ def _main(args):
             "INTERFACE_NAME": args.interface,
             "FLASH_START": args.memory_start
         }
+        "openocd_debug.sh": {},
+        "openocd_flash.sh": {},
+        "gdb.sh": {
+            "PRJ_NAME": prj_name,
+            "GDB_PORT": args.gdb_port
+        }
     }
 
     for template_name in params:

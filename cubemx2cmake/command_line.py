@@ -78,44 +78,26 @@ def _main(args):
         exit(0)
 
     params = {
-        "CMakeLists.txt": {
-            "PRJ_NAME": prj_name,
-            "MCU_FAMILY": mcu_family+"xx",
-            "MCU_LINE": mcu_username[:9]+"x"+cube_config["mcu.name"][13],
-            "MCU_LINKER_SCRIPT": mcu_username+"_FLASH.ld"
-        },
-        "STM32Toolchain.cmake": {
-            "MCU_LINKER_SCRIPT": mcu_username+"_FLASH.ld",
-            "MCU_ARCH": architecture[mcu_family+"xx"]
-        },
-        "openocd_debug.cfg": {
-            "TARGET": mcu_family+"x",
-            "PRJ_NAME": prj_name,
-            "INTERFACE_NAME": args.interface,
-            "GDB_PORT": args.gdb_port,
-            "TELNET_PORT": args.telnet_port
-        },
-        "openocd_flash.cfg": {
-            "TARGET": mcu_family+"x",
-            "PRJ_NAME": prj_name,
-            "INTERFACE_NAME": args.interface,
-            "FLASH_START": args.memory_start
-        },
-        "openocd_debug.sh": {},
-        "openocd_flash.sh": {},
-        "gdb.sh": {
-            "PRJ_NAME": prj_name,
-            "GDB_PORT": args.gdb_port
-        }
+        "PRJ_NAME": prj_name,
+        "MCU_FAMILY": mcu_family+"xx",
+        "MCU_LINE": mcu_username[:9]+"x"+cube_config["mcu.name"][13],
+        "MCU_LINKER_SCRIPT": mcu_username+"_FLASH.ld",
+        "MCU_ARCH": architecture[mcu_family+"xx"],
+        "TARGET": mcu_family+"x",
+        "INTERFACE_NAME": args.interface,
+        "GDB_PORT": args.gdb_port,
+        "TELNET_PORT": args.telnet_port
     }
 
-    for template_name in params:
-        template_fn = resource_filename(__name__, "templates/%s.template" % (template_name))
+    templates = os.listdir(resource_filename(__name__, "templates"))
+
+    for template_name in templates:
+        template_fn = resource_filename(__name__, "templates/%s" % (template_name))
         with open(template_fn, "r") as template_file:
             template = Template(template_file.read())
         try:
             with open(template_name, "w") as target_file:
-                target_file.write(template.safe_substitute(params[template_name]))
+                target_file.write(template.safe_substitute(params))
         except IOError:
             print("Cannot write output files! Maybe write access to the current directory is denied.")
             exit(0)

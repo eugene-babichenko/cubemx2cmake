@@ -2,6 +2,8 @@
 STM32CubeMX2CMake
 =================
 
+.. image:: https://badge.fury.io/py/cubemx2cmake.svg
+
 Installation
 ------------
 From this repository:

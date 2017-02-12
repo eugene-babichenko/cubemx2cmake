@@ -9,6 +9,12 @@ from string import Template
 from pkg_resources import resource_filename
 
 
+class LoggingCriticalHandler(logging.Handler):
+    def emit(self, record):
+        logging.shutdown()
+        exit(1)
+
+
 def main():
     """ Function entry point for running script from command line """
     _main(sys.argv[1:])
@@ -29,6 +35,7 @@ def _main(args):
     }
 
     logging.basicConfig(format="%(levelname)s: %(message)s", level=logging.INFO)
+    logging.getLogger().addHandler(LoggingCriticalHandler(logging.CRITICAL))
 
     arg_parser = ArgumentParser()
     arg_parser.add_argument("cube_file", default="", nargs='?',
@@ -59,7 +66,6 @@ def _main(args):
         else:
             logging.critical("%d *.ioc files were found. You need to specify an input file manually",
                              len(ioc_files))
-            exit(0)
 
     cube_config_parser = ConfigParser()
     try:
@@ -67,10 +73,8 @@ def _main(args):
         cube_config_parser.read_string(u"[section]\n" + open(cube_file).read())
     except FileNotFoundError:
         logging.critical("Input file doesn't exist!")
-        exit(0)
     except IOError:
         logging.critical("Input file doesn't exist, is broken or access denied.")
-        exit(0)
 
     # Get the data from the fake section we created earlier
     cube_config = dict(cube_config_parser["section"])
@@ -82,7 +86,6 @@ def _main(args):
     except KeyError:
         logging.critical("Failed to parse the input file. Maybe it is damaged.\nIf you think it isn't report to "
                          "https://github.com/eugene-babichenko/cubemx2cmake issues section")
-        exit(0)
 
     params = {
         "PRJ_NAME": prj_name,
@@ -112,6 +115,6 @@ def _main(args):
                 target_file.write(template.safe_substitute(params))
         except IOError:
             logging.critical("Cannot write output files! Maybe write access to the current directory is denied.")
-            exit(0)
 
     logging.info("All files were successfully generated!")
+    logging.shutdown()

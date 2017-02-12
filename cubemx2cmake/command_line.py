@@ -77,15 +77,23 @@ def _main(args):
         logging.critical("Input file doesn't exist, is broken or access denied.")
 
     # Get the data from the fake section we created earlier
-    cube_config = dict(cube_config_parser["section"])
+    # Lower all keys for compatibility with older versions of CubeMX
+    cube_config = dict((k.lower(), v) for k, v in dict(cube_config_parser["section"]).items())
 
     try:
         mcu_family = cube_config["mcu.family"]
         mcu_username = cube_config["mcu.username"]
         prj_name = cube_config["projectmanager.projectname"]
+        toolchain = cube_config["projectmanager.targettoolchain"]
+        generate_under_root = cube_config["projectmanager.underroot"]
     except KeyError:
-        logging.critical("Failed to parse the input file. Maybe it is damaged.\nIf you think it isn't report to "
+        logging.critical("Failed to parse the input file. Maybe it is corrupted.\nIf you think it isn't report to "
                          "https://github.com/eugene-babichenko/cubemx2cmake issues section")
+
+    if toolchain != "SW4STM32":
+        logging.critical("Wrong toolchain! SW4STM32 should be used with this script")
+    if generate_under_root != "true":
+        logging.critical("'Generate under root' should be applied!")
 
     params = {
         "PRJ_NAME": prj_name,

@@ -2,6 +2,7 @@
 
 import sys
 import os
+import logging
 from argparse import ArgumentParser
 from configparser import ConfigParser
 from string import Template
@@ -27,6 +28,8 @@ def _main(args):
         "STM32F7xx": "-mcpu=cortex-m7 -mfloat-abi=hard -mfpu=fpv5-sp-d16"
     }
 
+    logging.basicConfig(format="%(levelname)s: %(message)s", level=logging.INFO)
+
     arg_parser = ArgumentParser()
     arg_parser.add_argument("cube_file", default="", nargs='?',
                             help="CubeMX project file (if not specified, the one contained in current directory is "
@@ -46,14 +49,16 @@ def _main(args):
     else:
         ioc_files = []
         # Check if there is a single *.ioc file
+        logging.info("No input file was specified. Searching for a *.ioc file in the current directory.")
         for file in os.listdir("."):
             if file.endswith(".ioc"):
                 ioc_files.append(file)
         if len(ioc_files) == 1:
-            print(ioc_files[0] + " was found!")
             cube_file = ioc_files[0]
+            logging.info("%s file was found", cube_file)
         else:
-            print("No input file was specified!")
+            logging.critical("%d *.ioc files were found. You need to specify an input file manually",
+                             len(ioc_files))
             exit(0)
 
     cube_config_parser = ConfigParser()
@@ -61,10 +66,10 @@ def _main(args):
         # *.ioc files have a INI-like format, but without section, so we need to create one
         cube_config_parser.read_string(u"[section]\n" + open(cube_file).read())
     except FileNotFoundError:
-        print("Input file doesn't exist!")
+        logging.critical("Input file doesn't exist!")
         exit(0)
     except IOError:
-        print("Input file doesn't exist, is broken or access denied.")
+        logging.critical("Input file doesn't exist, is broken or access denied.")
         exit(0)
 
     # Get the data from the fake section we created earlier
@@ -75,7 +80,8 @@ def _main(args):
         mcu_username = cube_config["mcu.username"]
         prj_name = cube_config["projectmanager.projectname"]
     except KeyError:
-        print("Input file is broken!")
+        logging.critical("Failed to parse the input file. Maybe it is damaged.\nIf you think it isn't report to "
+                         "https://github.com/eugene-babichenko/cubemx2cmake issues section")
         exit(0)
 
     params = {
@@ -90,6 +96,9 @@ def _main(args):
         "TELNET_PORT": args.telnet_port
     }
 
+    logging.info("Successfully read %s", cube_file)
+    logging.info("Generating output files...")
+
     templates = os.listdir(resource_filename(__name__, "templates"))
 
     for template_name in templates:
@@ -97,12 +106,12 @@ def _main(args):
         with open(template_fn, "r") as template_file:
             template = Template(template_file.read())
         try:
-            with open(template_name, "w") as target_file:
+            output_name = template_name.split(".template")[0]
+            with open(output_name, "w") as target_file:
+                logging.info("Writing %s...", output_name)
                 target_file.write(template.safe_substitute(params))
         except IOError:
-            print("Cannot write output files! Maybe write access to the current directory is denied.")
+            logging.critical("Cannot write output files! Maybe write access to the current directory is denied.")
             exit(0)
 
-    print("All files were successfully generated!")
-
-    return params
+    logging.info("All files were successfully generated!")

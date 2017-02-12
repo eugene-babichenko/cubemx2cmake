@@ -29,15 +29,16 @@ def _main(args):
 
     arg_parser = ArgumentParser()
     arg_parser.add_argument("cube_file", default="", nargs='?',
-        help="CubeMX project file (if not specified, the one contained in current directory is used)")
+                            help="CubeMX project file (if not specified, the one contained in current directory is "
+                                 "used)")
     arg_parser.add_argument("-i", "--interface", default="stlink-v2",
-        help="OpenOCD debug interface name (stlink-v2 is used by default)")
+                            help="OpenOCD debug interface name (stlink-v2 is used by default)")
     arg_parser.add_argument("-m", "--memory-start", default="0x08000000",
-        help="Flash memory start address (0x08000000 by default)")
+                            help="Flash memory start address (0x08000000 by default)")
     arg_parser.add_argument("-g", "--gdb-port", default="3333",
-        help="The port for connecting with GDB")
+                            help="The port for connecting with GDB")
     arg_parser.add_argument("-t", "--telnet-port", default="4444",
-        help="The port for connecting via telnet")
+                            help="The port for connecting via telnet")
     args = arg_parser.parse_args(args)
 
     if args.cube_file != "":
@@ -49,7 +50,7 @@ def _main(args):
             if file.endswith(".ioc"):
                 ioc_files.append(file)
         if len(ioc_files) == 1:
-            print(ioc_files[0]+" was found!")
+            print(ioc_files[0] + " was found!")
             cube_file = ioc_files[0]
         else:
             print("No input file was specified!")
@@ -58,7 +59,7 @@ def _main(args):
     cube_config_parser = ConfigParser()
     try:
         # *.ioc files have a INI-like format, but without section, so we need to create one
-        cube_config_parser.read_string(u"[section]\n"+open(cube_file).read())
+        cube_config_parser.read_string(u"[section]\n" + open(cube_file).read())
     except FileNotFoundError:
         print("Input file doesn't exist!")
         exit(0)
@@ -79,11 +80,11 @@ def _main(args):
 
     params = {
         "PRJ_NAME": prj_name,
-        "MCU_FAMILY": mcu_family+"xx",
-        "MCU_LINE": mcu_username[:9]+"x"+cube_config["mcu.name"][13],
-        "MCU_LINKER_SCRIPT": mcu_username+"_FLASH.ld",
-        "MCU_ARCH": architecture[mcu_family+"xx"],
-        "TARGET": mcu_family+"x",
+        "MCU_FAMILY": mcu_family + "xx",
+        "MCU_LINE": mcu_username[:9] + "x" + cube_config["mcu.name"][13],
+        "MCU_LINKER_SCRIPT": mcu_username + "_FLASH.ld",
+        "MCU_ARCH": architecture[mcu_family + "xx"],
+        "TARGET": mcu_family + "x",
         "INTERFACE_NAME": args.interface,
         "GDB_PORT": args.gdb_port,
         "TELNET_PORT": args.telnet_port
@@ -92,7 +93,7 @@ def _main(args):
     templates = os.listdir(resource_filename(__name__, "templates"))
 
     for template_name in templates:
-        template_fn = resource_filename(__name__, "templates/%s" % (template_name))
+        template_fn = resource_filename(__name__, "templates/%s" % template_name)
         with open(template_fn, "r") as template_file:
             template = Template(template_file.read())
         try:

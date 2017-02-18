@@ -7,6 +7,17 @@ project(${PRJ_NAME} C ASM)
 add_definitions(-D${MCU_LINE})
 add_definitions(-DUSE_HAL_LIBRARY)
 
+set(TARGET         ${TARGET})
+set(INTERFACE_NAME ${INTERFACE_NAME})
+set(GDB_PORT       ${GDB_PORT})
+set(TELNET_PORT    ${TELNET_PORT})
+
+configure_file(scripts/gdb.sh.template ${PROJECT_BINARY_DIR}/gdb.sh)
+configure_file(scripts/openocd_debug.cfg.template ${PROJECT_BINARY_DIR}/openocd_debug.cfg)
+configure_file(scripts/openocd_debug.sh.template  ${PROJECT_BINARY_DIR}/openocd_debug.sh)
+configure_file(scripts/openocd_flash.cfg.template ${PROJECT_BINARY_DIR}/openocd_flash.cfg)
+configure_file(scripts/openocd_flash.sh.template  ${PROJECT_BINARY_DIR}/openocd_flash.sh)
+
 set(USER_INCLUDE Inc)
 set(CMSIS_DEVICE_INCLUDE Drivers/CMSIS/Device/ST/${MCU_FAMILY}/Include)
 set(CMSIS_INCLUDE Drivers/CMSIS/Include)
@@ -29,13 +40,10 @@ include_directories(${USER_INCLUDE} ${CMSIS_DEVICE_INCLUDE} ${CMSIS_INCLUDE} ${H
 
 add_executable(${PROJECT_NAME}.elf ${SOURCE_FILES})
 
-set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -Wl,-Map=${PROJECT_SOURCE_DIR}/build/${PROJECT_NAME}.map")
-set(HEX_FILE ${PROJECT_SOURCE_DIR}/build/${PROJECT_NAME}.hex)
-set(BIN_FILE ${PROJECT_SOURCE_DIR}/build/${PROJECT_NAME}.bin)
+set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} -Wl,-Map=${PROJECT_NAME}.map")
+set(HEX_FILE ${PROJECT_NAME}.hex)
+set(BIN_FILE ${PROJECT_NAME}.bin)
 
-add_custom_command(TARGET ${PROJECT_NAME}.elf PRE_BUILD
-        COMMAND ${CMAKE_COMMAND} -E make_directory ${PROJECT_SOURCE_DIR}/build
-        COMMENT "Creating build directory")
 add_custom_command(TARGET ${PROJECT_NAME}.elf POST_BUILD
         COMMAND ${CMAKE_OBJCOPY} -Oihex $<TARGET_FILE:${PROJECT_NAME}.elf> ${HEX_FILE}
         COMMAND ${CMAKE_OBJCOPY} -Obinary $<TARGET_FILE:${PROJECT_NAME}.elf> ${BIN_FILE}

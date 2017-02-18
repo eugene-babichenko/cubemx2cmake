@@ -2,6 +2,7 @@
 
 import sys
 import os
+import shutil
 import six
 import logging
 from argparse import ArgumentParser
@@ -124,6 +125,11 @@ def _main(args):
                 target_file.write(template.safe_substitute(params))
         except IOError:
             logging.critical("Cannot write output files! Maybe write access to the current directory is denied.")
+
+    try:
+        shutil.copytree(resource_filename(__name__, "scripts"), "scripts")
+    except OSError:
+        logging.critical("Cannot copy 'scripts' directory")
 
     logging.info("All files were successfully generated!")
     logging.shutdown()

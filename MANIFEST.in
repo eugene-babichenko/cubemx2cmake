@@ -1,2 +1,3 @@
 include README.rst
 recursive-include cubemx2cmake/templates *.template
+recursive-include cubemx2cmake/scripts *.template

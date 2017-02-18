@@ -1,1 +1,0 @@
-arm-none-eabi-gdb -ex "target remote localhost:${GDB_PORT}" build/${PRJ_NAME}.elf

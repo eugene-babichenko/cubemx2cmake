@@ -1,0 +1,8 @@
+source [find interface/${INTERFACE_NAME}.cfg]
+source [find target/${TARGET}.cfg]
+init
+reset init
+halt
+flash write_image erase ${PROJECT_NAME}.bin ${FLASH_START}
+verify_image ${PROJECT_NAME}.bin ${FLASH_START}
+shutdown

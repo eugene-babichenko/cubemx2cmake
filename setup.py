@@ -10,7 +10,7 @@ def readme():
 
 setup(
     name='cubemx2cmake',
-    version='2.0dev7',
+    version='2.0dev9',
     description='Command line tool to generate CMakeLists.txt from STM32CubeMX projects.',
     long_description=readme(),
     classifiers=[

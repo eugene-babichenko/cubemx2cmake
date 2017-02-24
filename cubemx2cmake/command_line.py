@@ -103,7 +103,7 @@ def _main(args):
         "MCU_LINE": mcu_username[:9] + "x" + cube_config["mcu.name"][13],
         "MCU_LINKER_SCRIPT": mcu_username + "_FLASH.ld",
         "MCU_ARCH": architecture[mcu_family + "xx"],
-        "TARGET": mcu_family + "x",
+        "TARGET": (mcu_family + "x").lower(),
         "INTERFACE_NAME": args.interface,
         "GDB_PORT": args.gdb_port,
         "TELNET_PORT": args.telnet_port

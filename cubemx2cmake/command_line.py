@@ -96,12 +96,31 @@ def _main(args):
     if generate_under_root != "true":
         logging.critical("'Generate under root' should be applied!")
 
+    mcu_family_xx = mcu_family + "xx"
+    mcu_line = None
+
+    # Find an appropriate mcu_line value
+    try:
+        with open("Drivers/CMSIS/Device/ST/{0}/Include/{1}.h".format(mcu_family_xx, mcu_family_xx.lower()),
+                  encoding="ISO-8859-1") as driver_include:
+            for line in driver_include.readlines():
+                if mcu_username[:11] in line:
+                    print(line)
+                    mcu_line = line.split("#define ")[1].split(" ")[0]
+    except FileNotFoundError:
+        logging.critical("Cannot find driver include file")
+    except IOError:
+        logging.critical("Cannot find or access driver include file")
+
+    if mcu_line is None:
+        logging.critical("Couldn't find an appropriate header file for this MCU")
+
     params = {
         "PRJ_NAME": prj_name,
-        "MCU_FAMILY": mcu_family + "xx",
-        "MCU_LINE": mcu_username[:9] + "x" + cube_config["mcu.name"][13],
+        "MCU_FAMILY": mcu_family_xx,
+        "MCU_LINE": mcu_line,
         "MCU_LINKER_SCRIPT": mcu_username + "_FLASH.ld",
-        "MCU_ARCH": architecture[mcu_family + "xx"],
+        "MCU_ARCH": architecture[mcu_family_xx],
         "TARGET": (mcu_family + "x").lower(),
         "INTERFACE_NAME": args.interface,
         "GDB_PORT": args.gdb_port,

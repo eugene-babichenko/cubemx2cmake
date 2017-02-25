@@ -11,7 +11,7 @@ addons:
     - libnewlib-arm-none-eabi
 python:
 - "2.7" # backward compatibility testing
-- "3.0" # not using new libraries, so there is no sense in testing for later versions
+- "3.2" # not using new libraries, so there is no sense in testing for later versions
 before_install:
 - "chmod +x ./.travis/script.sh"
 install: "pip install ."

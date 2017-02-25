@@ -1,0 +1,21 @@
+language: python
+addons:
+  apt:
+    packages:
+    - coreutils
+    - build-essential
+    - cmake
+    - gcc-arm-none-eabi
+    - libnewlib-arm-none-eabi
+python:
+- "2.7" # backward compatibility testing
+- "3.0" # not using new libraries, so there is no sense in testing for later versions
+install: "pip install ."
+scripts: "./.travis/script.sh"
+deploy:
+  provider: pypi
+  user: "eugene-babichenko"
+  password:
+    secure: "35Q/I5oPBZBtxDTKsFIExmpBbGbVnIKPvaQ4MwHNg9HTJGTGloGrhP2lrIowND82Iq+wkarM2ecwGC4x2K45mgkTXyYmJ/Md9/Mz0QZ80yPHjWJEq578uVDKVhB/NTQqWuLXySApy9E8KqjkgemIsVQt1pEu2rQgL/B2dZEJjhHzQj1fGrYrX96Lq9Irof+ffPs7iAKgZnwGW2eIWF9o/0TyPq/6c0utFhdJ/fKcIlVNtfyV2Dm3xp97Lff34se1WZ3pkMEeYttbaKShnH59yx4j2zYQIsq82Epc4Pgxbp8jYU5UrEXFC9fz7xViXCWQ8+5cSo5hUYK1ln2jRRFUhkokxCgT/y5SIUwKwoQFztCF67IWy+FDE4HF4lbnwf+ysjaXLNgb2oJ1bHbxSqHT+KLAT6RjEk34VF6OtbLs1a/GWr7IYr3MokZDz00gKQmLQd0WaBvCAM/gmr4yPnmKtt+BNo18Nujim5/iCYOxLu6jKZGN6XmVtiWzrWPXvg4rdOmi3qkiGIfFHTLL4Fqi97+irbZoTWW3L9ALexWLU9kJ2vHgkUeWSy1Rq6eLeabMTCEKIgbPs2QAVFYuD4zNGNGOCmimFnBoB5IcbjZD5WLO4q+7JrMpExhfFrXqyIeJFEBO8V0hkyp98BD/VTd7+vho+UlHHmnftwJ07aOYm2Y="
+  on:
+    tags: true

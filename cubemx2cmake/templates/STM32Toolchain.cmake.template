@@ -7,7 +7,7 @@ CMAKE_FORCE_C_COMPILER(arm-none-eabi-gcc GCC)
 CMAKE_FORCE_CXX_COMPILER(arm-none-eabi-g++ GCC)
 set(CMAKE_OBJCOPY arm-none-eabi-objcopy)
 
-set(COMMON_FLAGS "${MCU_ARCH} -lc -specs=nosys.specs -mthumb -mno-thumb-interwork -ffunction-sections -fdata-sections")
+set(COMMON_FLAGS "${MCU_ARCH} -lc -specs=nosys.specs -mthumb -mthumb-interwork -ffunction-sections -fdata-sections -g -fno-common -fmessage-length=0")
 
 set(CMAKE_CXX_FLAGS "${COMMON_FLAGS}")
 set(CMAKE_C_FLAGS "${COMMON_FLAGS}")

@@ -3,10 +3,9 @@
 import sys
 import os
 import shutil
-import six
 import logging
 from argparse import ArgumentParser
-from six.moves import configparser
+from configparser import ConfigParser
 from string import Template
 from pkg_resources import resource_filename
 
@@ -69,18 +68,18 @@ def _main(args):
             logging.critical("%d *.ioc files were found. You need to specify an input file manually",
                              len(ioc_files))
 
-    cube_config_parser = configparser.ConfigParser()
+    cube_config_parser = ConfigParser()
     try:
         # *.ioc files have a INI-like format, but without section, so we need to create one
-        cube_config_parser.read_string(u"[section]\n" + open(cube_file).read())
+        cube_config_parser.read_string("[section]\n" + open(cube_file).read())
     except FileNotFoundError:
-        logging.critical("Input file doesn't exist!")
+        logging.critical("Input file doesn't exist")
     except IOError:
         logging.critical("Input file doesn't exist, is broken or access denied.")
 
     # Get the data from the fake section we created earlier
     # Lower all keys for compatibility with older versions of CubeMX
-    cube_config = dict((k.lower(), v) for k, v in six.iteritems(dict(cube_config_parser["section"])))
+    cube_config = dict((k.lower(), v) for k, v in dict(cube_config_parser["section"]).items())
 
     try:
         mcu_family = cube_config["mcu.family"]

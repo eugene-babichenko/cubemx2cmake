@@ -1,6 +1,6 @@
 language: python
-dist: trusty
-sudo: required
+dist: trusty   # have gcc-arm-none-eabi
+sudo: required # trusty is available only with this option
 addons:
   apt:
     packages:
@@ -10,7 +10,6 @@ addons:
     - gcc-arm-none-eabi
     - libnewlib-arm-none-eabi
 python:
-- "2.7" # backward compatibility testing
 - "3.2" # not using new libraries, so there is no sense in testing for later versions
 before_install:
 - "chmod +x ./.travis/script.sh"

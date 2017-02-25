@@ -3,6 +3,8 @@ dist: trusty   # have gcc-arm-none-eabi
 sudo: required # trusty is available only with this option
 addons:
   apt:
+    sources:
+    - sourceline: "ppa:josh-bialkowski/cmake" # for CMake 3.6
     packages:
     - coreutils
     - build-essential

@@ -12,6 +12,8 @@ addons:
 python:
 - "2.7" # backward compatibility testing
 - "3.0" # not using new libraries, so there is no sense in testing for later versions
+before_install:
+- "chmod +x ./.travis/script.sh"
 install: "pip install ."
 script: "./.travis/script.sh"
 deploy:

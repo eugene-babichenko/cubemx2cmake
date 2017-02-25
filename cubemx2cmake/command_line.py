@@ -24,11 +24,11 @@ def main():
 def _main(args):
     """ Runnable code with CLI args for testing convenience"""
     architecture = {
-        "STM32L0xx": "-mcpu=cortex-m0 -mfloat-abi=softfp",
-        "STM32F0xx": "-mcpu=cortex-m0 -mfloat-abi=softfp",
-        "STM32L1xx": "-mcpu=cortex-m3 -mfloat-abi=softfp",
-        "STM32F1xx": "-mcpu=cortex-m3 -mfloat-abi=softfp",
-        "STM32F2xx": "-mcpu=cortex-m3 -mfloat-abi=softfp",
+        "STM32L0xx": "-mcpu=cortex-m0 -mfpu=vfp -msoft-float",
+        "STM32F0xx": "-mcpu=cortex-m0 -mfpu=vfp -msoft-float",
+        "STM32L1xx": "-mcpu=cortex-m3 -mfpu=vfp -msoft-float -mfix-cortex-m3-ldrd",
+        "STM32F1xx": "-mcpu=cortex-m3 -mfpu=vfp -msoft-float -mfix-cortex-m3-ldrd",
+        "STM32F2xx": "-mcpu=cortex-m3 -mfpu=vfp -msoft-float -mfix-cortex-m3-ldrd",
         "STM32L4xx": "-mcpu=cortex-m4 -mfloat-abi=hard -mfpu=fpv4-sp-d16",
         "STM32F3xx": "-mcpu=cortex-m4 -mfloat-abi=hard -mfpu=fpv4-sp-d16",
         "STM32F4xx": "-mcpu=cortex-m4 -mfloat-abi=hard -mfpu=fpv4-sp-d16",

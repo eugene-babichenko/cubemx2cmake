@@ -2,12 +2,12 @@
 
 import sys
 import os
-import shutil
 import logging
 from argparse import ArgumentParser
 from configparser import ConfigParser
 from string import Template
 from pkg_resources import resource_filename
+from distutils.dir_util import copy_tree
 
 
 class LoggingCriticalHandler(logging.Handler):
@@ -126,7 +126,7 @@ def _main(args):
             logging.critical("Cannot write output files! Maybe write access to the current directory is denied.")
 
     try:
-        shutil.copytree(resource_filename(__name__, "scripts"), "scripts")
+        copy_tree(resource_filename(__name__, "scripts"), "scripts")
     except OSError:
         logging.critical("Cannot copy 'scripts' directory")
 

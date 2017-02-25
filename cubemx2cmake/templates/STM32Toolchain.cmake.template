@@ -3,8 +3,8 @@ include(CMakeForceCompiler)
 set(CMAKE_SYSTEM_NAME Generic)
 set(CMAKE_SYSTEM_VERSION 1)
 
-set(CMAKE_C_COMPILER arm-none-eabi-gcc)
-set(CMAKE_CXX_COMPILER arm-none-eabi-g++)
+CMAKE_FORCE_C_COMPILER(arm-none-eabi-gcc GCC)
+CMAKE_FORCE_CXX_COMPILER(arm-none-eabi-g++ GCC)
 set(CMAKE_OBJCOPY arm-none-eabi-objcopy)
 
 set(COMMON_FLAGS "${MCU_ARCH} -lc -specs=nosys.specs -mthumb -ffunction-sections -fdata-sections -g -fno-common -fmessage-length=0")

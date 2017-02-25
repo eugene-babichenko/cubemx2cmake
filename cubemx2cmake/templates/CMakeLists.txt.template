@@ -41,10 +41,10 @@ file(GLOB_RECURSE CMSIS_INCLUDE_F        ${CMSIS_INCLUDE}/*.h)
 file(GLOB_RECURSE HAL_INCLUDE_F          ${HAL_INCLUDE}/*.h)
 
 # Source files
-file(GLOB_RECURSE USER_SOURCES  Src/*.c)
-file(GLOB_RECURSE HAL_SOURCES   Drivers/${MCU_FAMILY}_HAL_DRIVER/Src/*.c)
-file(GLOB_RECURSE CMSIS_SYSTEM  Drivers/CMSIS/Device/ST/${MCU_FAMILY}/Source/Templates/system_${MCU_FAMILY}.c)
-file(GLOB_RECURSE CMSIS_STARTUP Drivers/CMSIS/Device/ST/${MCU_FAMILY}/Source/Templates/gcc/startup_${MCU_LINE}.s)
+file(GLOB_RECURSE USER_SOURCES Src/*.c)
+file(GLOB_RECURSE HAL_SOURCES  Drivers/${MCU_FAMILY}_HAL_DRIVER/Src/*.c)
+file(CMSIS_SYSTEM  Drivers/CMSIS/Device/ST/${MCU_FAMILY}/Source/Templates/system_${MCU_FAMILY}.c)
+file(CMSIS_STARTUP Drivers/CMSIS/Device/ST/${MCU_FAMILY}/Source/Templates/gcc/startup_${MCU_LINE}.s)
 
 set(SOURCE_FILES ${USER_SOURCES} ${HAL_SOURCES} ${CMSIS_SYSTEM} ${CMSIS_STARTUP} ${MCU_LINKER_SCRIPT}
                  ${USER_INCLUDE_F} ${CMSIS_DEVICE_INCLUDE_F} ${CMSIS_INCLUDE_F} ${HAL_INCLUDE_F})

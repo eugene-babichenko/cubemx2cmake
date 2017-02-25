@@ -2,24 +2,27 @@
 
 # For projects that can be successfully built
 set -e
-for dir in ./test-data/should-success/*/
+cd ./test-data/should-build/
+find . -maxdepth 1 -mindepth 1 -type d -print0 | while IFS= read -r -d $'\0' dir
 do
-    cd ${dir}
+    cd "$dir"
     cubemx2cmake
+    rm -rf build
     mkdir build
     cd build
-    cmake .. -D CMAKE_TOOLCHAIN_FILE=../STM32Toolchain.cmake
+    cmake -D CMAKE_TOOLCHAIN_FILE=../STM32Toolchain.cmake ..
     ls
     make
     cd ../..
 done
+cd ../..
 
 # For projects, that should not be generated
 set +e
-for dir in ./test-data/should-not-generate/*/
+cd ./test-data/should-not-generate
+find . -maxdepth 1 -mindepth 1 -type f -iname "*.ioc" -print0 | while IFS= read -r -d $'\0' file
 do
-    cd ${dir}
-    cubemx2cmake
+    cubemx2cmake "$file"
     if [ $? -eq 0 ]
     then
         echo "Generator should fail on this project"

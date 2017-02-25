@@ -118,7 +118,9 @@ def _main(args):
     params = {
         "PRJ_NAME": prj_name,
         "MCU_FAMILY": mcu_family_xx,
+        "MCU_FAMILY_L": mcu_family_xx.lower(),
         "MCU_LINE": mcu_line,
+        "MCU_STARTUP": mcu_line.lower(),
         "MCU_LINKER_SCRIPT": mcu_username + "_FLASH.ld",
         "MCU_ARCH": architecture[mcu_family_xx],
         "TARGET": (mcu_family + "x").lower(),

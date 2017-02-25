@@ -43,8 +43,8 @@ file(GLOB_RECURSE HAL_INCLUDE_F          ${HAL_INCLUDE}/*.h)
 # Source files
 file(GLOB_RECURSE USER_SOURCES Src/*.c)
 file(GLOB_RECURSE HAL_SOURCES  Drivers/${MCU_FAMILY}_HAL_DRIVER/Src/*.c)
-set(CMSIS_SYSTEM  Drivers/CMSIS/Device/ST/${MCU_FAMILY}/Source/Templates/system_${MCU_FAMILY}.c)
-set(CMSIS_STARTUP Drivers/CMSIS/Device/ST/${MCU_FAMILY}/Source/Templates/gcc/startup_${MCU_LINE}.s)
+set(CMSIS_SYSTEM  Drivers/CMSIS/Device/ST/${MCU_FAMILY}/Source/Templates/system_${MCU_FAMILY_L}.c)
+set(CMSIS_STARTUP Drivers/CMSIS/Device/ST/${MCU_FAMILY}/Source/Templates/gcc/startup_${MCU_STARTUP}.s)
 
 set(SOURCE_FILES ${USER_SOURCES} ${HAL_SOURCES} ${CMSIS_SYSTEM} ${CMSIS_STARTUP} ${MCU_LINKER_SCRIPT}
                  ${USER_INCLUDE_F} ${CMSIS_DEVICE_INCLUDE_F} ${CMSIS_INCLUDE_F} ${HAL_INCLUDE_F})

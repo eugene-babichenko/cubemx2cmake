@@ -20,9 +20,10 @@ cd ../..
 # For projects, that should not be generated
 set +e
 cd ./test-data/should-not-generate
-find . -maxdepth 1 -mindepth 1 -type f -iname "*.ioc" -print0 | while IFS= read -r -d $'\0' file
+find . -maxdepth 1 -mindepth 1 -type d -print0 | while IFS= read -r -d $'\0' file
 do
-    cubemx2cmake "$file"
+    cd "$dir"
+    cubemx2cmake
     if [ $? -eq 0 ]
     then
         echo "Generator should fail on this project"

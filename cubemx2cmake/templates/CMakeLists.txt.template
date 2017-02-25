@@ -16,11 +16,17 @@ set(GDB_PORT       ${GDB_PORT})
 set(TELNET_PORT    ${TELNET_PORT})
 
 # Apply the configuration to the scripts
-configure_file(scripts/gdb.sh.template            ${PROJECT_BINARY_DIR}/gdb.sh)
 configure_file(scripts/openocd_debug.cfg.template ${PROJECT_BINARY_DIR}/openocd_debug.cfg)
-configure_file(scripts/openocd_debug.sh.template  ${PROJECT_BINARY_DIR}/openocd_debug.sh)
 configure_file(scripts/openocd_flash.cfg.template ${PROJECT_BINARY_DIR}/openocd_flash.cfg)
-configure_file(scripts/openocd_flash.sh.template  ${PROJECT_BINARY_DIR}/openocd_flash.sh)
+if (${CMAKE_SYSTEM_NAME} MATCHES "Windows")
+    configure_file(scripts/gdb.sh.template           ${PROJECT_BINARY_DIR}/gdb.bat)
+    configure_file(scripts/openocd_debug.sh.template ${PROJECT_BINARY_DIR}/openocd_debug.bat)
+    configure_file(scripts/openocd_flash.sh.template ${PROJECT_BINARY_DIR}/openocd_flash.bat)
+else()
+    configure_file(scripts/gdb.sh.template           ${PROJECT_BINARY_DIR}/gdb.sh)
+    configure_file(scripts/openocd_debug.sh.template ${PROJECT_BINARY_DIR}/openocd_debug.sh)
+    configure_file(scripts/openocd_flash.sh.template ${PROJECT_BINARY_DIR}/openocd_flash.sh)
+endif()
 
 # HAL include directories
 set(USER_INCLUDE         Inc)

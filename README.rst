@@ -5,6 +5,8 @@ STM32CubeMX2CMake
 .. image:: https://badge.fury.io/py/cubemx2cmake.svg
    :target: https://pypi.python.org/pypi/cubemx2cmake
 
+**WARNING: THIS PROJECT IS NO LONGER MAINTAINED AND IS INCOMPATIBLE WITH NEW VERSION OF CUBEMX. AN ARTICLE ON USING CUBE ALONG WITH CMAKE IS ON ITS WAY**
+
 Installation
 ------------
 From this repository:
